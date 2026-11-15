@@ -1,0 +1,101 @@
+﻿.site-header {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper)
+}
+
+.header-inner {
+    max-width: 1240px;
+    margin: auto;
+    padding: 0 40px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    gap: 66px
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    font-size: 31px;
+    letter-spacing: -1.5px;
+    font-weight: 750
+}
+
+.brand-mark {
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--green);
+    color: #faf6e9;
+    width: 38px;
+    height: 40px;
+    font-family: Georgia, serif;
+    font-size: 33px;
+    margin-right: 11px;
+    padding-bottom: 5px
+}
+
+.brand-dot {
+    color: #8c9a64
+}
+
+.nav-current {
+    display: block;
+    padding: 36px 0 33px;
+    border-bottom: 3px solid var(--green);
+    font-size: 13px;
+    font-weight: 600
+}
+
+.header-note {
+    margin-left: auto;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--muted)
+}
+
+main {
+    max-width: 1240px;
+    margin: auto;
+    padding: 0 40px
+}
+
+.site-footer {
+    max-width: 1160px;
+    border-top: 1px solid var(--line);
+    margin: auto;
+    padding: 25px 0 30px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 11px;
+    color: var(--muted)
+}
+
+.footer-brand {
+    font-size: 22px;
+    font-weight: 750;
+    letter-spacing: -1px;
+    color: var(--ink)
+}
+
+.site-footer > span:last-child {
+    margin-left: auto;
+    font-size: 10px
+}
+
+.error-page {
+    padding: 80px 0;
+    min-height: 65vh
+}
+
+.error-page h1 {
+    font: 40px Georgia, serif
+}
+
+.error-page p {
+    color: var(--muted);
+    line-height: 1.6
+}
+

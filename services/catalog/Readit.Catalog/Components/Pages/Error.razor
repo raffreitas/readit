@@ -1,0 +1,11 @@
+﻿@page "/Error"
+@using System.Diagnostics
+<PageTitle>Não foi possível carregar | Readit</PageTitle>
+<section class="error-page"><span class="eyebrow">ALGO DEU ERRADO</span><h1>Vamos tentar de novo?</h1><p>Não foi possível processar sua solicitação. Recarregue a página ou volte ao catálogo.</p><a class="explore-link" href="/">Voltar ao catálogo ↗</a>
+@if (!string.IsNullOrEmpty(RequestId)) { <p>Identificador da solicitação: <code>@RequestId</code></p> }
+</section>
+@code {
+    [CascadingParameter] private HttpContext? HttpContext { get; set; }
+    private string? RequestId { get; set; }
+    protected override void OnInitialized() => RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
+}

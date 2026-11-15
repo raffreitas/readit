@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/Catalog/">
+    <Project Path="services/catalog/Readit.Catalog/Readit.Catalog.csproj" />
+  </Folder>
+</Solution>

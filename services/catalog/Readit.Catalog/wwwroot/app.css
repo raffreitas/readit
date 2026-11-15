@@ -1,0 +1,51 @@
+:root {
+    --ink: #243c34;
+    --muted: #737a70;
+    --green: #365e49;
+    --paper: #fbfaf6;
+    --line: #e4e5dc;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    font-synthesis: none
+}
+
+* {
+    box-sizing: border-box
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 24px
+}
+
+body {
+    margin: 0
+}
+
+a {
+    color: inherit;
+    text-decoration: none
+}
+
+button, input, select {
+    font: inherit
+}
+
+button, a, input, select {
+    -webkit-tap-highlight-color: transparent
+}
+
+button {
+    cursor: pointer
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 3px solid #9ba96e;
+    outline-offset: 4px
+}
+
+h1:focus {
+    outline: none
+}
+
