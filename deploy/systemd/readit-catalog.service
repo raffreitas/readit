@@ -1,0 +1,22 @@
+[Unit]
+Description=Readit - Catalogo de livros
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=readit
+Group=readit
+WorkingDirectory=/opt/readit/catalog
+ExecStart=/usr/bin/dotnet /opt/readit/catalog/Readit.Catalog.dll
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://0.0.0.0:8080
+Environment=DOTNET_NOLOGO=true
+Restart=always
+RestartSec=5
+KillSignal=SIGINT
+TimeoutStopSec=30
+SyslogIdentifier=readit-catalog
+
+[Install]
+WantedBy=multi-user.target
