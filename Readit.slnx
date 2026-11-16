@@ -1,5 +1,8 @@
 <Solution>
-  <Folder Name="/Catalog/">
-    <Project Path="services/catalog/Readit.Catalog/Readit.Catalog.csproj" />
-  </Folder>
+    <Folder Name="/Catalog/">
+        <Project Path="services/catalog/Readit.Catalog/Readit.Catalog.csproj"/>
+    </Folder>
+    <Folder Name="/ReadingTips/">
+        <Project Path="services/reading-tips/Readit.ReadingTips/Readit.ReadingTips.csproj"/>
+    </Folder>
 </Solution>

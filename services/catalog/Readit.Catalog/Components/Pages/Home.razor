@@ -5,35 +5,73 @@
 @using System.Text
 @using Readit.Catalog.Models
 @using Readit.Catalog.Data
+@using Readit.Catalog.Services
+@inject ReadingTipsClient ReadingTips
 
 <PageTitle>Catálogo de livros | Readit</PageTitle>
 
 <section class="hero" aria-labelledby="catalog-title">
     <div class="hero-copy">
         <span class="eyebrow"><span aria-hidden="true">✦</span> SUA PRÓXIMA HISTÓRIA COMEÇA AQUI</span>
-        <h1 id="catalog-title">Um mundo inteiro.<br />A uma <em>página</em> de distância.</h1>
-        <p>Entre clássicos e novas descobertas, encontre o livro<br class="desktop-break" /> que vai fazer parte da sua história.</p>
+        <h1 id="catalog-title">Um mundo inteiro.<br/>A uma <em>página</em> de distância.</h1>
+        <p>Entre clássicos e novas descobertas, encontre o livro<br class="desktop-break"/> que vai fazer parte da sua
+            história.</p>
         <a class="explore-link" href="#books">Explore o catálogo <span aria-hidden="true">↗</span></a>
     </div>
     <div class="hero-art" aria-hidden="true">
         <span class="art-orbit"></span><span class="art-star">✳</span>
-        <div class="hero-book book-back"><span>ANTOINE DE<br />SAINT-EXUPÉRY</span><strong>O pequeno<br />príncipe</strong><span class="book-sun">✧</span></div>
-        <div class="hero-book book-front"><span>MACHADO DE ASSIS</span><strong>Dom<br />Casmurro</strong><span class="book-arch"></span><small>UM CLÁSSICO PARA REDESCOBRIR</small></div>
-        <span class="art-caption">Grandes histórias.<br /><em>Infinitas possibilidades.</em></span>
+        <div class="hero-book book-back"><span>ANTOINE DE<br/>SAINT-EXUPÉRY</span><strong>O
+                pequeno<br/>príncipe</strong><span class="book-sun">✧</span></div>
+        <div class="hero-book book-front"><span>MACHADO DE ASSIS</span><strong>Dom<br/>Casmurro</strong><span
+                class="book-arch"></span><small>UM CLÁSSICO PARA REDESCOBRIR</small></div>
+        <span class="art-caption">Grandes histórias.<br/><em>Infinitas possibilidades.</em></span>
     </div>
 </section>
 
 <section id="books" class="catalog" aria-labelledby="books-title">
-    <div class="catalog-heading"><div><span class="eyebrow">NOSSA ESTANTE</span><h2 id="books-title">Encontre sua próxima leitura<span>.</span></h2></div><span class="catalog-total">@BookCatalog.Books.Count livros no catálogo</span></div>
+    @if (Tip is not null)
+    {
+        <aside class="reading-tip" aria-labelledby="reading-tip-title">
+            <h2 id="reading-tip-title">@Tip.Title</h2>
+            <p>@Tip.Message</p>
+        </aside>
+    }
+    <div class="catalog-heading">
+        <div><span class="eyebrow">NOSSA ESTANTE</span>
+            <h2 id="books-title">Encontre sua próxima leitura<span>.</span></h2></div>
+        <span class="catalog-total">@BookCatalog.Books.Count livros no catálogo</span></div>
     <div class="toolbar">
-        <div class="search-field"><span aria-hidden="true">⌕</span><input aria-label="Buscar por título ou autor" placeholder="Busque por título ou autor..." type="search" @bind="search" @bind:event="oninput" /></div>
-        <label class="select-field"><span>Estoque</span><select aria-label="Filtrar por estoque" @bind="stock"><option value="all">Todos os livros</option><option value="available">Disponíveis</option><option value="unavailable">Esgotados</option></select></label>
-        <label class="select-field"><span>Ordenar por</span><select aria-label="Ordenar livros" @bind="sort"><option value="default">Destaques</option><option value="name">Título: A–Z</option><option value="price-asc">Menor preço</option><option value="price-desc">Maior preço</option><option value="pages">Número de páginas</option></select></label>
+        <div class="search-field"><span aria-hidden="true">⌕</span><input aria-label="Buscar por título ou autor"
+                                                                          placeholder="Busque por título ou autor..."
+                                                                          type="search" @bind="search"
+                                                                          @bind:event="oninput"/></div>
+        <label class="select-field"><span>Estoque</span><select aria-label="Filtrar por estoque" @bind="stock">
+                <option value="all">Todos os livros</option>
+                <option value="available">Disponíveis</option>
+                <option value="unavailable">Esgotados</option>
+            </select></label>
+        <label class="select-field"><span>Ordenar por</span><select aria-label="Ordenar livros" @bind="sort">
+                <option value="default">Destaques</option>
+                <option value="name">Título: A–Z</option>
+                <option value="price-asc">Menor preço</option>
+                <option value="price-desc">Maior preço</option>
+                <option value="pages">Número de páginas</option>
+            </select></label>
     </div>
-    <div class="results-bar" role="status" aria-live="polite"><span><strong>@VisibleBooks.Count</strong> @(VisibleBooks.Count == 1 ? "livro encontrado" : "livros encontrados")</span>@if (search.Length > 0 || stock != "all" || sort != "default") { <button class="clear-button" @onclick="ClearFilters">Limpar filtros ×</button> }<span class="results-note">Boas histórias merecem ser descobertas.</span></div>
+    <div class="results-bar" role="status" aria-live="polite">
+        <span><strong>@VisibleBooks.Count</strong> @(VisibleBooks.Count == 1 ? "livro encontrado" : "livros encontrados")</span>
+        @if (search.Length > 0 || stock != "all" || sort != "default")
+        {
+            <button class="clear-button" @onclick="ClearFilters">Limpar filtros ×</button>
+        }
+        <span class="results-note">Boas histórias merecem ser descobertas.</span></div>
     @if (VisibleBooks.Count == 0)
     {
-        <div class="empty-state"><span aria-hidden="true">⌕</span><h3>Nenhum livro por aqui</h3><p>Tente outro título, autor ou altere o filtro de estoque.</p><button class="primary-button" @onclick="ClearFilters">Ver todos os livros</button></div>
+        <div class="empty-state"><span aria-hidden="true">⌕</span>
+            <h3>Nenhum livro por aqui</h3>
+            <p>Tente outro título, autor ou altere o filtro de estoque.</p>
+            <button class="primary-button" @onclick="ClearFilters">Ver todos os livros</button>
+        </div>
     }
     else
     {
@@ -41,16 +79,36 @@
             @foreach (var book in VisibleBooks)
             {
                 <article class="book-card" @key="book.ID">
-                    <div class="cover-stage tone-@((book.ID - 1) % 4)"><img src="@book.ImageUrl" alt="Capa de @book.Name" loading="lazy" width="200" height="280" /><span class="stock-badge @(book.InStock == 0 ? "sold-out" : "")"><span aria-hidden="true">●</span> @(book.InStock > 0 ? "Disponível" : "Esgotado")</span></div>
-                    <div class="book-info"><div class="book-meta"><span>@book.Pages páginas</span><span>#@book.ID.ToString("D3")</span></div><h3>@book.Name</h3><p class="author">@book.Author</p><div class="book-bottom"><strong>@book.Price.ToString("C", BrazilianCulture)</strong><span>@(book.InStock > 0 ? $"{book.InStock} em estoque" : "Sem estoque")</span></div></div>
+                    <div class="cover-stage tone-@((book.ID - 1) % 4)"><img src="@book.ImageUrl"
+                                                                            alt="Capa de @book.Name" loading="lazy"
+                                                                            width="200" height="280"/><span
+                            class="stock-badge @(book.InStock == 0 ? "sold-out" : "")"><span
+                                aria-hidden="true">●</span> @(book.InStock > 0 ? "Disponível" : "Esgotado")</span></div>
+                    <div class="book-info">
+                        <div class="book-meta"><span>@book.Pages páginas</span><span>#@book.ID.ToString("D3")</span>
+                        </div>
+                        <h3>@book.Name</h3>
+                        <p class="author">@book.Author</p>
+                        <div class="book-bottom">
+                            <strong>@book.Price.ToString("C", BrazilianCulture)</strong><span>@(book.InStock > 0 ? $"{book.InStock} em estoque" : "Sem estoque")</span>
+                        </div>
+                    </div>
                 </article>
             }
         </div>
     }
-    <div class="catalog-end"><span></span><p>Uma boa leitura é só o começo <span aria-hidden="true">✦</span></p><span></span></div>
+    <div class="catalog-end"><span></span>
+        <p>Uma boa leitura é só o começo <span aria-hidden="true">✦</span></p><span></span></div>
 </section>
 
 @code {
+    [PersistentState] public ReadingTip? Tip { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Tip ??= await ReadingTips.GetTipAsync();
+    }
+
     private static readonly CultureInfo BrazilianCulture = CultureInfo.GetCultureInfo("pt-BR");
     private string search = string.Empty;
     private string stock = "all";
@@ -75,8 +133,14 @@
         }
     }
 
-    private void ClearFilters() { search = string.Empty; stock = "all"; sort = "default"; }
+    private void ClearFilters()
+    {
+        search = string.Empty;
+        stock = "all";
+        sort = "default";
+    }
 
     private static string Normalize(string value) => string.Concat(value.Normalize(NormalizationForm.FormD)
         .Where(character => CharUnicodeInfo.GetUnicodeCategory(character) != UnicodeCategory.NonSpacingMark)).ToLowerInvariant();
+
 }

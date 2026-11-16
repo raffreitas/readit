@@ -26,6 +26,27 @@
     padding-bottom: 4px
 }
 
+.reading-tip {
+    padding: 20px;
+    margin-bottom: 28px;
+    background: #f1f2e9;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+}
+
+.reading-tip h2 {
+    margin: 0 0 8px;
+    font: 22px Georgia, serif;
+    color: var(--green);
+}
+
+.reading-tip p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
 .toolbar {
     display: flex;
     gap: 13px;
